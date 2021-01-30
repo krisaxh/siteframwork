@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken'
-// Json token cryptography lib
+import {dbcheck} from '../src/database'
 
-// Encryption key? Im not sure.
-const KEY = 'sfwesrbjekgnwlkmbrgerjgwegbljewk'
+// Signature key for json tokens
+const KEY = 'jrebjegjipwknfk231jr2ri4v31b3tot43t342ht98'
 
 // Main API to process POST data
 export default (req, res) => {
@@ -14,12 +14,17 @@ export default (req, res) => {
   }
   // Get required data from POST
   const { username, password } = req.body
-
+  const hashid = "example_hash"
   // {status, json.token}
-  // Here we check of user and respond
+
+  // Check if supplied credentials
+  // are correct, if not reject req
+  dbcheck('user1', 'password1')
+
   res.status(200).json({
      token: jwt.sign({ 
-       username
+       username,
+       hashid
       }, KEY) 
     })
 }
