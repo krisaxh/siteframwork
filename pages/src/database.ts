@@ -1,11 +1,8 @@
-//Simple database reader
-export const dbcheck = (username, password) => {
-    let data = require('../../db/data.json');
-    try {
-        // Check user and compare if password is correct
-        //console.log(data.users.{username}.password)
-    } catch {
-        console.log()
+// Simple database reader
+export const validate = (username, password) => {
+    if (require('../../db/data.json').users[username]){
+        return password == require('../../db/data.json').users[username].password;
+    } else {
+        return false;
     }
-    return
 }

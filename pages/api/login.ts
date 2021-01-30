@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import {dbcheck} from '../src/database'
+import {validate} from '../src/database'
 
 // Signature key for json tokens
 const KEY = 'jrebjegjipwknfk231jr2ri4v31b3tot43t342ht98'
@@ -12,19 +12,25 @@ export default (req, res) => {
     res.end('Error')
     return
   }
+
   // Get required data from POST
   const { username, password } = req.body
   const hashid = "example_hash"
-  // {status, json.token}
 
   // Check if supplied credentials
   // are correct, if not reject req
-  dbcheck('user1', 'password1')
-
-  res.status(200).json({
-     token: jwt.sign({ 
-       username,
-       hashid
-      }, KEY) 
-    })
+  if (validate(username, password)) {
+    res.status(200).json({
+      token: jwt.sign({ 
+        username,
+        hashid
+       }, KEY) 
+     })
+     return
+  } else {
+    // Uzlabo šito šis scuffed
+    res.status(200).json({
+    }, KEY)
+    return
+  }
 }

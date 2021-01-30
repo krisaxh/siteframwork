@@ -1,6 +1,7 @@
-import {useState} from 'react'
 import jwt from 'jsonwebtoken'
+import {useState} from 'react'
 import {setUserSession} from './api/session'
+
 export default function Home() {
   // Variables and variable specific set functions
   const [username, setUsername] = useState<string>('')
@@ -9,9 +10,11 @@ export default function Home() {
   const [message, setMessage] = useState<string>('Not logged in!')
   // Submit function "submitform()"
   async function submitform() {
-    // Submit POST data to login API (/api/login.ts)
     //#
     // Add check for empty fields here.
+    if (username == '' || password == ''){
+      console.log('empty field')
+    }
     //#
     const res = await fetch('/api/login', {
       method: 'POST',
@@ -20,17 +23,17 @@ export default function Home() {
       },
       body: JSON.stringify({username, password})
     }).then((t) => t.json())
+    
     // Recive JSON Token from API
     const token = res.token  
     // Process API Token
     if (token) {
-      const json = jwt.decode(token) as { [key: string]: string}  // <<== Probably vulnerable element
       setUserSession(token, username);
+      const json = jwt.decode(token) as { [key: string]: string}  // <<== Probably vulnerable element
       setMessage('Welcome ' + json.username) // <<== Probably vulnerable element
 
     } else {
-      setMessage('Somthing went wrong!')
-      // Token not present, most likley XSS
+      setMessage('Invalid credentials!')
     }
   }
   //https://www.cluemediator.com/login-app-create-login-form-in-reactjs-using-secure-rest-api#isia
