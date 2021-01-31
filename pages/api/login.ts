@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import {validate} from '../src/database'
 
 // Signature key for json tokens
-const KEY = 'jrebjegjipwknfk231jr2ri4v31b3tot43t342ht98'
+import signature from '../src/signature'
 
 // Main API to process POST data
 export default (req, res) => {
@@ -24,13 +24,13 @@ export default (req, res) => {
       token: jwt.sign({ 
         username,
         hashid
-       }, KEY) 
-     })
-     return
+      }, signature()) 
+    })
+    return
   } else {
-    // Uzlabo šito šis scuffed
+    // Fix this part up, its way scuffed
     res.status(200).json({
-    }, KEY)
+    }, signature())
     return
   }
 }
