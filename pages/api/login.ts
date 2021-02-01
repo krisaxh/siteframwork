@@ -1,5 +1,5 @@
 import {validate} from '../src/database'
-import {DecryptAES, JWTSign} from '../src/signature'
+import {JWTSign} from '../src/signature'
 
 // Main API to process POST data
 export default (req, res) => {
