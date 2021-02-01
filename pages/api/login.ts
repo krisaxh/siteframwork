@@ -1,8 +1,5 @@
-import jwt from 'jsonwebtoken'
 import {validate} from '../src/database'
-
-// Signature key for json tokens
-import signature from '../src/signature'
+import {DecryptAES, JWTSign} from '../src/signature'
 
 // Main API to process POST data
 export default (req, res) => {
@@ -15,22 +12,14 @@ export default (req, res) => {
 
   // Get required data from POST
   const { username, password } = req.body
-  const hashid = "example_hash"
+  // Validate user data, and get userid
+  const userid = validate(username, password)
 
-  // Check if supplied credentials
-  // are correct, if not reject req
-  if (validate(username, password)) {
-    res.status(200).json({
-      token: jwt.sign({ 
-        username,
-        hashid
-      }, signature()) 
-    })
-    return
+  if (0 < userid) {
+    res.status(200).json({token: JWTSign({username, userid}, true)})
+  } else if (0 == userid) {
+    res.status(200).json({token: JWTSign("Invalid credentials", true)})
   } else {
-    // Fix this part up, its way scuffed
-    res.status(200).json({
-    }, signature())
-    return
+    res.status(401)
   }
 }
