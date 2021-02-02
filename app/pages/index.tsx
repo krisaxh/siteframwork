@@ -1,77 +1,30 @@
 import { useState } from "react";
-
-import { setSession, getToken, getLogin } from "./api/session";
-import {
-  JWTValidate,
-  JWTSign,
-  JWTDecode,
-  EncryptPBKDF2,
-  EncryptAES,
-  DecryptAES,
-} from "./src/signature";
+import { useForm } from "react-hook-form";
 
 export default function Home() {
-  // Variables and variable specific set functions
-  const [plainusername, setUsername] = useState<string>("");
-  const [plainpassword, setPassword] = useState<string>("");
-  const [message, setMessage] = useState<string>("Not logged in!");
+  const { register, handleSubmit, errors } = useForm();
 
-  async function fetchPosts() {
-    fetch("/api/posts");
-  }
+  const onSubmitForm = async (data) => {
+    console.log(data);
+  };
 
-  // Submit function "submitform()"
-  async function submitform() {
-    // Add check for empty fields here.
-    if (plainusername.length == 0 || plainpassword.length == 0) {
-      setMessage("Empty field/s");
-      return;
-    }
-
-    const username = EncryptAES(plainusername);
-    const password = EncryptAES(EncryptPBKDF2(plainpassword));
-
-    const res = await fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    }).then((t) => t.json());
-
-    // Recive JSON Token from API
-    const token = res.token;
-
-    if (token)
-      setSession(
-        token,
-        JWTSign({ username, enc_pass: EncryptAES(password) }, false)
-      );
-
-    if (JWTValidate(getToken())) {
-      setMessage("Welcome " + DecryptAES(JWTDecode(getLogin()).username) + "!");
-    } else {
-      setMessage("Invalid credentials!");
-    }
-  }
   return (
     <div>
-      <h1>{message}</h1>
-      <form>
+      <form onSubmit={handleSubmit(onSubmitForm)}>
+        <input ref={register({ required: true })} type="text" name="username" />
+        {errors.username && (
+          <span className={styles.error}>This field is required!</span>
+        )}
+
         <input
-          type="text"
-          name="username"
-          value={plainusername}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
+          ref={register({ required: true })}
           type="password"
           name="password"
-          value={plainpassword}
-          onChange={(e) => setPassword(e.target.value)}
         />
-        <input type="button" value="login" onClick={submitform} />
-        <button onClick={fetchPosts}>Test user</button>
+        {errors.password && (
+          <span className={styles.error}>This field is required!</span>
+        )}
+        <input type="submit" />
       </form>
     </div>
   );
