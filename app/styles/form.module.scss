@@ -27,6 +27,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  z-index: 1;
 }
 .form input {
   padding: 15px;
@@ -36,7 +37,7 @@
   border: none;
   margin-bottom: 25px;
 }
-.form input[type="button"] {
+.form input[type="Submit"] {
   width: 200px;
   padding: 15px 0;
   background-color: #ffb703;
