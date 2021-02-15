@@ -1,24 +1,14 @@
 import { useState } from "react";
 
 import { setSession, getToken, getLogin } from "./api/session";
-import {
-  JWTValidate,
-  JWTSign,
-  JWTDecode,
-  EncryptPBKDF2,
-  EncryptAES,
-  DecryptAES,
-} from "./src/signature";
+
+// import { EncryptPBKDF2 } from "./api/signature";
 
 export default function Home() {
   // Variables and variable specific set functions
   const [plainusername, setUsername] = useState<string>("");
   const [plainpassword, setPassword] = useState<string>("");
   const [message, setMessage] = useState<string>("Not logged in!");
-
-  async function fetchPosts() {
-    fetch("/api/posts");
-  }
 
   // Submit function "submitform()"
   async function submitform() {
@@ -28,10 +18,10 @@ export default function Home() {
       return;
     }
 
-    const username = EncryptAES(plainusername);
-    const password = EncryptAES(EncryptPBKDF2(plainpassword));
+    const username = plainusername;
+    // const password = EncryptPBKDF2(plainpassword);
 
-    const res = await fetch("/api/login", {
+    const res = await fetch("http://localhost:8000/api/signature", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -39,19 +29,7 @@ export default function Home() {
       body: JSON.stringify({ username, password }),
     }).then((t) => t.json());
 
-    // Recive JSON Token from API
-    const token = res.token;
-
-    if (token)
-      setSession(
-        token,
-        JWTSign({ username, enc_pass: EncryptAES(password) }, false)
-      );
-
-    if (JWTValidate(getToken())) {
-      setMessage("Welcome " + DecryptAES(JWTDecode(getLogin()).username) + "!");
-    } else {
-      setMessage("Invalid credentials!");
+    if (res) {
     }
   }
   return (
@@ -71,7 +49,6 @@ export default function Home() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <input type="button" value="login" onClick={submitform} />
-        <button onClick={fetchPosts}>Test user</button>
       </form>
     </div>
   );
