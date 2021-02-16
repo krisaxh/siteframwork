@@ -1,26 +1,10 @@
-{
-    "users": {
-        "undefined": {
-            "id": 0,
-            "password": ""
-        },
-        "admin": {
-            "id": 1,
-            "password": "1b13f009b3b3cbcd5ad61672d83159990511072820efcba95573f61456d1d748a86460632277d33abb54d20cea662d4db6926ab9c70a456d5e8d5fd8e38a9b1ece84de655152b04c3257f2a43bbdb15710207f3de8eb6ae59412c641ff9aad60effd5b28b9f12bea30ae5c472861ff54a5c9c2008dc3fd3dbb5a4bf0967bfcea69850847ec459489e7bc9a33fe579557a8c06490a623fee18f708afb45ef233b9d89e85ea0bb0823183a24ebb21356e0ff284f03a636a39fe1785963eecfcd06ba2baaddbfcb17c543b2d44ce3f4044dea5cb1426b27bf6277a6a57675e4877cd3dc4b544fc95f93a3dc9f9876b4901c5df948876d5403336ddad4a1d8b36a2f"
-        },
-        "defaultuser": {
-            "id": 2,
-            "password": "2261419a641dd60f9ef03614ea681df0c9fd7eb093604c8cf02cad946a8edb42447397f4ef624cfc55a8003df66f81325a5591031f36f2333a31abdee13eb9827a3d378c1635c58fda7a767f5cbf6837aeb77781a99e0338dbe618e2af94d00659fe72783eacc4a6e590bcd36e57f17fbeeb2927d9e361eaf69c55765955b30b224292204fdaaf747c051665b69f7b0605be1589798aa97de7034b5d769de9119d5483553ba3f6b81f7158217531b9e72fb44b36eb4660b5fc85bea1d0294d8984499fe49d7c4a24cdef60b04632315c011fec78ad88d70561d23f2c03668c067af64d48ede24d62394f8774237c027638b65dbf2a7aff1127450221fe545075"
-        }
+[
+    {
+        "username": "Ronlads",
+        "password": "ronalds123"
     },
-    "bots": {
-        "bot1": {
-            "signature": "viwhrnwgw",
-            "password": "password1"
-        },
-        "bot2": {
-            "signature": "ljdvkwjvne",
-            "password": "password2"
-        }
+    {
+        "username": "Krsitaps",
+        "password": "krsistaps123"
     }
-}
+]
